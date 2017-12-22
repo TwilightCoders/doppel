@@ -1,4 +1,10 @@
-# Doppel [![Build Status](https://secure.travis-ci.org/TwilightCoders/doppel.png)](http://travis-ci.org/TwilightCoders/doppel) [![Gem Version](https://badge.fury.io/rb/doppel.png)](http://badge.fury.io/rb/doppel) [![Code Climate](https://codeclimate.com/github/TwilightCoders/doppel.png)](https://codeclimate.com/github/TwilightCoders/doppel) [![Dependency Status](https://gemnasium.com/TwilightCoders/doppel.svg)](https://gemnasium.com/TwilightCoders/doppel)
+[![Version      ](https://img.shields.io/gem/v/doppel.svg?maxAge=2592000)](https://rubygems.org/gems/doppel)
+[![Build Status ](https://travis-ci.org/TwilightCoders/doppel.svg)](https://travis-ci.org/TwilightCoders/doppel)
+[![Code Climate ](https://api.codeclimate.com/v1/badges/427b6d065c1b772cecfb/maintainability)](https://codeclimate.com/github/TwilightCoders/doppel/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/427b6d065c1b772cecfb/test_coverage)](https://codeclimate.com/github/TwilightCoders/doppel/test_coverage)
+[![Dependencies ](https://gemnasium.com/badges/github.com/TwilightCoders/doppel.svg)](https://gemnasium.com/github.com/TwilightCoders/doppel)
+
+# Doppel
 
 ## Description
 
