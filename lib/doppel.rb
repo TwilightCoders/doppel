@@ -21,7 +21,7 @@ module Doppel
   end
 
   def self.load
-    ::ActiveRecord::Base.send :include, ActiveRecord::Base
+    ::ActiveRecord::Base.send :prepend, ActiveRecord::Base
   end
 
 end
