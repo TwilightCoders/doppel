@@ -10,6 +10,8 @@ Doppel provides convenience scopes on your ActiveRecord Models for finding simil
 
 Compatible with ActiveRecord `4.0`, `4.1`, `4.2`, `5.0`, `5.1`
 
+Currently supports PostgreSQL and it's `levenshtein` function via the [`fuzzystrmatch`](https://www.postgresql.org/docs/9.3/static/fuzzystrmatch.html) extension.
+
 ## Usage
 
 Add this line to your application's Gemfile:
@@ -34,7 +36,38 @@ class User < Account
   # ...
 end
 
-User.find_similar(:name)
+User.create(name: "John Doe", email: 'foo@bar.baz')
+User.create(name: "John Deer", email: 'foo@bar.baz')
+User.create(name: "John Dear", email: 'bar24@foo.baz')
+
+users_with_similar_names = User.find_similar(:name, sensitivity: 1).to_a
+=> [#<User:0x007fb42b093ad0
+  id: 14,
+  name: "John Deer",
+  email: "foo@bar.baz",
+  created_at: Fri, 22 Dec 2017 23:04:41 UTC +00:00,
+  updated_at: Fri, 22 Dec 2017 23:04:41 UTC +00:00>,
+ #<User:0x007fb42b093940
+  id: 15,
+  name: "John Dear",
+  email: "bar24@foo.baz",
+  created_at: Fri, 22 Dec 2017 23:04:41 UTC +00:00,
+  updated_at: Fri, 22 Dec 2017 23:04:41 UTC +00:00>]
+
+users_with_similar_emails = User.find_similar(:email, sensitivity: 1).to_a
+=> [#<User:0x007fb426786e00
+  id: 13,
+  name: "John Doe",
+  email: "foo@bar.baz",
+  created_at: Fri, 22 Dec 2017 23:04:41 UTC +00:00,
+  updated_at: Fri, 22 Dec 2017 23:04:41 UTC +00:00>,
+ #<User:0x007fb426786bd0
+  id: 14,
+  name: "John Deer",
+  email: "foo@bar.baz",
+  created_at: Fri, 22 Dec 2017 23:04:41 UTC +00:00,
+  updated_at: Fri, 22 Dec 2017 23:04:41 UTC +00:00>]
+
 ```
 
 
