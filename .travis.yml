@@ -1,43 +1,122 @@
 language: ruby
+
 sudo: false
 
 cache: bundler
+
+before_install:
+  - gem install "rubygems-update:<3.0" --no-document # This is necessary because we're testing against so many (older) ruby versions
+  - update_rubygems
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
 script:
   - bundle exec rspec
 
-after_success:
-  - bundle exec codeclimate-test-reporter
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 addons:
-  postgresql: "9.3"
+  postgresql: 9.5
 
-rvm:
-  - 2.4
-  - 2.3
-  - 2.2
-  - 2.1
-  - 2.0
+jobs:
+  include:
+    # 2.7
+    - gemfile: gemfiles/activerecord-edge.Gemfile
+      rvm: 2.7
+    - gemfile: gemfiles/activerecord-6.0.Gemfile
+      rvm: 2.7
+    - gemfile: gemfiles/activerecord-5.2.Gemfile
+      rvm: 2.7
+    - gemfile: gemfiles/activerecord-5.1.Gemfile
+      rvm: 2.7
+    - gemfile: gemfiles/activerecord-5.0.Gemfile
+      rvm: 2.7
 
-gemfile:
-  - gemfiles/activerecord-5.1.Gemfile
-  - gemfiles/activerecord-5.0.Gemfile
-  - gemfiles/activerecord-4.2.Gemfile
-  - gemfiles/activerecord-4.1.Gemfile
-  - gemfiles/activerecord-4.0.Gemfile
+    # 2.6
+    - gemfile: gemfiles/activerecord-edge.Gemfile
+      rvm: 2.6
+    - gemfile: gemfiles/activerecord-6.0.Gemfile
+      rvm: 2.6
+    - gemfile: gemfiles/activerecord-5.2.Gemfile
+      rvm: 2.6
+    - gemfile: gemfiles/activerecord-5.1.Gemfile
+      rvm: 2.6
+    - gemfile: gemfiles/activerecord-5.0.Gemfile
+      rvm: 2.6
 
-matrix:
-  exclude:
-  - rvm: 2.0
-    gemfile: gemfiles/activerecord-5.0.Gemfile
-  - rvm: 2.0
-    gemfile: gemfiles/activerecord-5.1.Gemfile
+    # 2.5
+    - gemfile: gemfiles/activerecord-edge.Gemfile
+      rvm: 2.5
+    - gemfile: gemfiles/activerecord-6.0.Gemfile
+      rvm: 2.5
+    - gemfile: gemfiles/activerecord-5.2.Gemfile
+      rvm: 2.5
+    - gemfile: gemfiles/activerecord-5.1.Gemfile
+      rvm: 2.5
+    - gemfile: gemfiles/activerecord-5.0.Gemfile
+      rvm: 2.5
 
-  - rvm: 2.1
-    gemfile: gemfiles/activerecord-5.0.Gemfile
-  - rvm: 2.1
-    gemfile: gemfiles/activerecord-5.1.Gemfile
+    # 2.4
+    - gemfile: gemfiles/activerecord-5.2.Gemfile
+      rvm: 2.4
+    - gemfile: gemfiles/activerecord-5.1.Gemfile
+      rvm: 2.4
+    - gemfile: gemfiles/activerecord-5.0.Gemfile
+      rvm: 2.4
+    - gemfile: gemfiles/activerecord-4.2.Gemfile
+      rvm: 2.4
+    - gemfile: gemfiles/activerecord-4.1.Gemfile
+      rvm: 2.4
+    - gemfile: gemfiles/activerecord-4.0.Gemfile
+      rvm: 2.4
 
-  - rvm: 2.4
-    gemfile: gemfiles/activerecord-4.0.Gemfile
-  - rvm: 2.4
-    gemfile: gemfiles/activerecord-4.1.Gemfile
+    # 2.3
+    - gemfile: gemfiles/activerecord-5.2.Gemfile
+      rvm: 2.3
+    - gemfile: gemfiles/activerecord-5.1.Gemfile
+      rvm: 2.3
+    - gemfile: gemfiles/activerecord-5.0.Gemfile
+      rvm: 2.3
+    - gemfile: gemfiles/activerecord-4.2.Gemfile
+      rvm: 2.3
+    - gemfile: gemfiles/activerecord-4.1.Gemfile
+      rvm: 2.3
+    - gemfile: gemfiles/activerecord-4.0.Gemfile
+      rvm: 2.3
+
+    # 2.2
+    - gemfile: gemfiles/activerecord-5.2.Gemfile
+      rvm: 2.2
+    - gemfile: gemfiles/activerecord-5.1.Gemfile
+      rvm: 2.2
+    - gemfile: gemfiles/activerecord-5.0.Gemfile
+      rvm: 2.2
+    - gemfile: gemfiles/activerecord-4.2.Gemfile
+      rvm: 2.2
+    - gemfile: gemfiles/activerecord-4.1.Gemfile
+      rvm: 2.2
+    - gemfile: gemfiles/activerecord-4.0.Gemfile
+      rvm: 2.2
+
+    # 2.1
+    - gemfile: gemfiles/activerecord-4.2.Gemfile
+      rvm: 2.1
+    - gemfile: gemfiles/activerecord-4.1.Gemfile
+      rvm: 2.1
+    - gemfile: gemfiles/activerecord-4.0.Gemfile
+      rvm: 2.1
+
+    # 2.0
+    - gemfile: gemfiles/activerecord-4.2.Gemfile
+      rvm: 2.0
+    - gemfile: gemfiles/activerecord-4.1.Gemfile
+      rvm: 2.0
+    - gemfile: gemfiles/activerecord-4.0.Gemfile
+      rvm: 2.0
+
+  allow_failures:
+  - gemfile: gemfiles/activerecord-edge.Gemfile
